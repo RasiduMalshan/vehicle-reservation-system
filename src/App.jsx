@@ -1,7 +1,6 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Home from './pages/Home';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Dashboard from './pages/Dashboard';
@@ -9,6 +8,7 @@ import AdminDashboard from './components/AdminDashboard';
 import Navbar from './components/Navbar';
 import BookingForm from './components/BookingForm';
 import './index.css';
+import Home from './pages/home';
 
 function App() { 
   const [user, setUser] = useState(null);
@@ -45,3 +45,4 @@ function App() {
 }
 
 export default App;
+
