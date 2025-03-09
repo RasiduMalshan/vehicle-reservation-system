@@ -1,12 +1,14 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer } from "recharts";
+import Swal from "sweetalert2";
 
 const AdminDashboard = () => {
   const [stats, setStats] = useState({ totalBookings: 0, availableCars: 0, pendingRequests: 0 });
   const [customers, setCustomers] = useState([]);
   const [search, setSearch] = useState("");
-
+  const [editingCustomer, setEditingCustomer] = useState(null);
+  
   useEffect(() => {
     axios.get("/api/dashboard/stats")
       .then(response => setStats(response.data))
@@ -23,9 +25,37 @@ const AdminDashboard = () => {
   );
 
   const handleDelete = (id) => {
-    axios.delete(`/api/customers/${id}`)
-      .then(() => setCustomers(customers.filter(customer => customer.id !== id)))
-      .catch(error => console.error("Error deleting customer:", error));
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#3085d6",
+      confirmButtonText: "Yes, delete it!"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        axios.delete(`/api/customers/${id}`)
+          .then(() => {
+            setCustomers(customers.filter(customer => customer.id !== id));
+            Swal.fire("Deleted!", "Customer has been deleted.", "success");
+          })
+          .catch(error => console.error("Error deleting customer:", error));
+      }
+    });
+  };
+
+  const handleEdit = (customer) => {
+    setEditingCustomer(customer);
+  };
+
+  const handleSaveEdit = () => {
+    axios.put(`/api/customers/${editingCustomer.id}`, editingCustomer)
+      .then(() => {
+        setCustomers(customers.map(c => c.id === editingCustomer.id ? editingCustomer : c));
+        setEditingCustomer(null);
+      })
+      .catch(error => console.error("Error updating customer:", error));
   };
 
   const data = [
@@ -85,6 +115,12 @@ const AdminDashboard = () => {
                 <td className="border p-2">{customer.name}</td>
                 <td className="border p-2">{customer.telephone}</td>
                 <td className="border p-2">
+                  <button 
+                    onClick={() => handleEdit(customer)} 
+                    className="bg-yellow-500 text-white px-3 py-1 rounded mr-2"
+                  >
+                    Edit
+                  </button>
                   <button 
                     onClick={() => handleDelete(customer.id)} 
                     className="bg-red-500 text-white px-3 py-1 rounded"
