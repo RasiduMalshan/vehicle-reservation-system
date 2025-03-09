@@ -8,6 +8,7 @@ const Profile = ({ user }) => {
     address: "",
     telephone: "",
     destinationDetails: "",
+    password: ""
   });
 
   useEffect(() => {
@@ -58,6 +59,14 @@ const Profile = ({ user }) => {
             type="text"
             name="destinationDetails"
             value={profile.destinationDetails}
+            onChange={handleChange}
+            className="w-full p-2 border rounded mb-2"
+          />
+          <input
+            type="password"
+            name="password"
+            placeholder="New Password"
+            value={profile.password}
             onChange={handleChange}
             className="w-full p-2 border rounded mb-2"
           />
