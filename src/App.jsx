@@ -5,6 +5,7 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import Dashboard from './pages/Dashboard';
 import AdminDashboard from './components/AdminDashboard';
+import Profile from './components/Profile';
 import Navbar from './components/Navbar';
 import BookingForm from './components/BookingForm';
 import './index.css';
@@ -38,6 +39,8 @@ function App() {
           <Route path="/dashboard" element={<Dashboard user={user} />} />
           <Route path="/admin" element={<AdminDashboard customers={customers} />} />
           <Route path="/book" element={<BookingForm availableCars={availableCars} />} />
+          <Route path="/profile" element={<Profile user={user} />} />
+
         </Routes>
       </div>
     </Router>

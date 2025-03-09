@@ -30,6 +30,7 @@ const Navbar = ({ user, setUser }) => {
             <>
               <Link to="/login" className="hover:text-gray-300 transition-all">Login</Link>
               <Link to="/register" className="hover:text-gray-300 transition-all">Register</Link>
+              {user && <Link to="/profile" className="hover:text-gray-300 transition-all">Profile</Link>}
             </>
           )}
         </div>
