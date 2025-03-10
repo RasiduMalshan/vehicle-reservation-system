@@ -13,7 +13,11 @@ const Register = ({ setUser }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post("/api/customers", { name, address, telephone, destination_details: destinationDetails });
+      const response = await axios.post(
+        "/vehicle-reservation-system/api/customers/",
+         { name, address, telephone, destinationDetails },
+         {withCredentials:true}
+        );
       setUser(response.data.user);
       navigate("/dashboard");
     } catch (err) {

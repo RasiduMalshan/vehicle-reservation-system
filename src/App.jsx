@@ -17,13 +17,13 @@ function App() {
   const [availableCars, setAvailableCars] = useState([]);
   
   useEffect(() => {
-    axios.get('/api/customers')
+    axios.get('/vehicle-reservation-system/api/customers/')
       .then(response => setCustomers(response.data))
       .catch(error => console.error('Error fetching customers:', error));
   }, []);
 
   useEffect(() => {
-    axios.get('/api/cars/available')
+    axios.get('/vehicle-reservation-system/api/cars/available')
       .then(response => setAvailableCars(response.data))
       .catch(error => console.error('Error fetching cars:', error));
   }, []);
